@@ -5,10 +5,11 @@ export const WishListContext = createContext();
 
 export default function WishListProvider({ children }) {
   // Fetching Data
-  const { data } = useFetch("https://backend-e-commerce-ashen.vercel.app/v1/api/wishList");
+  const { data } = useFetch(
+    "https://backend-e-commerce-ashen.vercel.app/v1/api/wishlist"
+  );
 
-  const isDataThere =
-    (data && data?.data[0]?.products.map((pId) => pId._id)) || [];
+  const isDataThere = (data && data?.data[0]?.products) || [];
 
   // Managing States
   const [wishlist, setWishList] = useState("");
@@ -18,24 +19,29 @@ export default function WishListProvider({ children }) {
 
   //   Functions
 
-  async function postWishListItemHandler(id) {
-    try {
-      const response = await fetch("https://backend-e-commerce-ashen.vercel.app/v1/api/wishlist", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ productId: id }),
-      });
+async function postWishListItemHandler(id) {
+  try {
+    const response = await fetch("https://backend-e-commerce-ashen.vercel.app/v1/api/wishlist", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId: id }),
+    });
 
-      setWishListItems((prev) => [...prev, id]);
+    const responseData = await response.json();
+    console.log("Response from server:", responseData);
 
-      const responseData = await response.json();
-      console.log("Response from server:", responseData);
-    } catch (error) {
-      console.log(error);
+    if (responseData.success && Array.isArray(responseData.products)) {
+      setWishListItems(responseData.products);
+    } else {
+      console.warn("No product data returned from server.");
     }
+  } catch (error) {
+    console.error("Error adding to wishlist:", error);
   }
+}
+
 
   async function deleteWishListItemHandler(id) {
     try {
@@ -46,7 +52,7 @@ export default function WishListProvider({ children }) {
         }
       );
 
-      setWishListItems((prev) => prev.filter((pid) => pid !== id));
+      setWishListItems((prev) => prev.filter((p) => p._id !== id));
       if (!response.ok) {
         throw new Error("Failed to delete item");
       } else {
@@ -60,7 +66,7 @@ export default function WishListProvider({ children }) {
   async function wishListHandler() {
     if (!wishlist) return;
 
-    const idPresent = wishListItems?.includes(wishlist);
+    const idPresent = wishListItems?.some((item) => item._id === wishlist);
 
     console.log(idPresent);
 
@@ -84,7 +90,7 @@ export default function WishListProvider({ children }) {
 
   useEffect(() => {
     if (data && data.data && data.data[0]?.products) {
-      setWishListItems(data.data[0].products.map((p) => p._id));
+      setWishListItems(data.data[0].products);
     }
   }, [data]);
 
@@ -93,11 +99,12 @@ export default function WishListProvider({ children }) {
     if (data && data.data && data.data[0]?.products) {
       wishListHandler();
     }
-  }, [data, wishlist, setWishList]);
+  }, [data, wishlist]);
 
   return (
     <WishListContext.Provider
       value={{
+        data,
         wishlist,
         setWishList,
         wishListItems,
