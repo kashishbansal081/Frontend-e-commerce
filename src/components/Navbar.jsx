@@ -24,7 +24,7 @@ export default function Navbar({ setSearchItem }) {
   return (
     <>
       <nav
-        className="navbar navbar-expand-lg bg-dark border-bottom border-body"
+        className="navbar navbar-expand-lg bg-dark border-bottom border-body py-2"
         data-bs-theme="dark"
       >
         <div className="container">

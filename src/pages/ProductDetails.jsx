@@ -81,11 +81,11 @@ export default function ProductDetails() {
                       className="position-absolute top-0 end-0 mt-2 me-3"
                       size={25}
                       color={
-                        wishListItems.includes(productId) ? "#e3002a" : "#999"
+                        wishListItems.some((product)=> product._id === productId) ? "#e3002a" : "#999"
                       }
                       onClick={() => {
                         setWishList(productId);
-                        if (wishListItems?.includes(productId)) {
+                        if (wishListItems.some((product)=> product._id === productId) ) {
                           triggerAlert("❌ Removed from wishlist!", "danger");
                         } else {
                           triggerAlert("💖 Added to wishlist!", "success");

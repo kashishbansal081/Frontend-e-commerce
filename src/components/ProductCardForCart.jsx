@@ -96,19 +96,23 @@ export default function ProductCardForCart({ prod }) {
                 <button
                   onClick={() => {
                     setWishList(prod.product._id);
-                    if (wishListItems?.includes(prod.product._id)) {
+                    if (
+                      wishListItems.some(
+                        (item) => item._id === prod.product._id
+                      )
+                    ) {
                       triggerAlert("❌ Removed from wishlist!", "danger");
                     } else {
                       triggerAlert("💖 Added to wishlist!", "success");
                     }
                   }}
                   className={`btn btn-sm ms-0 ms-md-2 mt-3 mt-md-0 ${
-                    wishListItems?.includes(prod.product._id)
+                    wishListItems.some((item) => item._id === prod.product._id)
                       ? "btn-primary"
                       : "btn-warning"
                   }`}
                 >
-                  {wishListItems?.includes(prod.product._id)
+                  {wishListItems.some((item) => item._id === prod.product._id)
                     ? "Remove from WishList"
                     : "Add To WishList"}
                 </button>

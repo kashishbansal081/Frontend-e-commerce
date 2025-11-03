@@ -54,7 +54,7 @@ export default function ProductListing({ searchItem, setSearchItem }) {
               Showing All Products ({filterProducts.length})
             </h4>
 
-            <div className="row justify-content-center">
+            <div className="row">
               {loading ? (
                 <div className="text-center my-5">
                   <div
@@ -69,7 +69,7 @@ export default function ProductListing({ searchItem, setSearchItem }) {
                 filterProducts.map((product) => (
                   <div
                     key={product._id}
-                    className="col-12 col-sm-12 col-md-12 col-lg-12 mb-4"
+                    className="col-12 col-sm-12 col-md-6 col-lg-4 mb-4"
                   >
                     <ProductCard
                       product={product}

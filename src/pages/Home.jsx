@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import useFetch from "../customHooks/useFetch";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const { data } = useFetch("https://backend-e-commerce-ashen.vercel.app/v1/api/category");
@@ -131,6 +132,7 @@ export default function Home() {
           </div>
         </section>
       </div>
+      <Footer/>
     </>
   );
 }
