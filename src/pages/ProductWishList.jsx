@@ -35,8 +35,8 @@ export default function ProductWishList({}) {
       <h1 className="my-3">My WishList</h1>
       <div className="container">
         <div className="row g-4">
-          {wishListItems.length > 0 ? (
-            wishListItems.map((product) => (
+          {wishListItems?.length > 0 ? (
+            wishListItems?.map((product) => (
               <div
                 key={product._id}
                 className="col-12 col-sm-6 col-md-4 col-lg-3"
@@ -47,7 +47,11 @@ export default function ProductWishList({}) {
                       src={product.productImage}
                       alt={product.productName}
                       className="card-img-top mx-auto mt-3"
-                      style={{ height: "260px", width: "200px" }}
+                      style={{
+                        height: "260px",
+                        width: "200px",
+                        overflow: "hidden",
+                      }}
                     />
                     <button
                       type="button"
@@ -58,8 +62,8 @@ export default function ProductWishList({}) {
                         size={25}
                         color={
                           wishListItems.some((item) => item._id === product._id)
-                            ? "#e3002a" 
-                            : "#999" 
+                            ? "#e3002a"
+                            : "#999"
                         }
                         onClick={() => {
                           setWishList(product._id);

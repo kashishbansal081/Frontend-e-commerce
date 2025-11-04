@@ -29,7 +29,7 @@ export default function OrderPage() {
         {orders.length > 0 ? (
           orders.map((order, index) => (
             <div key={index} className="card mb-4 p-3 shadow-sm">
-              <h5 className="text-start">Order Date: {new Date(order.orderData).toLocaleString()}</h5>
+              <h5 className="text-start" style={{fontSize: '1rem'}}>Order Date: {new Date(order.orderDate).toLocaleString()}</h5>
  
               <div className="row">
                 {order.items.map((item, i) => (
