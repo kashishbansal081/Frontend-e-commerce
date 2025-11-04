@@ -10,6 +10,10 @@ export default function CartManagement() {
   const [price, setPrice] = useState(0);
   const [items, setItems] = useState(0);
 
+  const discount = price >= 1000 ? Math.round(price * 0.1) : 0;
+  const delivery = price > 1000 ? 0 : 99; 
+  const totalAmount = price - discount + delivery;
+
   useEffect(() => {
     if (cartData?.length > 0) {
       const total = cartData.reduce(
@@ -36,16 +40,51 @@ export default function CartManagement() {
           </h5>
         ) : (
           <>
-            <div className="row">
+            <div className="row gap-4 gap-md-0">
               {cartData.map((prod) => (
                 <ProductCardForCart key={prod.product._id} prod={prod} />
               ))}
             </div>
 
-            <div className="text-center text-md-end mt-4">
-              <h4 className="fw-bold">No Of Items ({items})</h4>
-              <h4 className="fw-bold">Total: ₹{price}</h4>
-              <Link className="btn btn-success mt-2" to= '/address'>Proceed to Checkout</Link>
+           <div className="d-flex justify-content-center my-5">
+              <div className="card shadow-sm p-4" style={{ maxWidth: "700px", width: "100%" }}>
+                <h5 className="fw-bold mb-3 text-center">PRICE DETAILS</h5>
+                <hr />
+                <div className="d-flex justify-content-between mb-2">
+                  <span>Price ({items} item{items > 1 ? "s" : ""})</span>
+                  <span>₹{price}</span>
+                </div>
+
+                {discount > 0 && (
+                  <div className="d-flex justify-content-between mb-2 text-success">
+                    <span>Discount (10%)</span>
+                    <span>- ₹{discount}</span>
+                  </div>
+                )}
+
+                <div className="d-flex justify-content-between mb-2">
+                  <span>Delivery Charges</span>
+                  <span>{delivery === 0 ? "Free" : `₹${delivery}`}</span>
+                </div>
+
+                <hr />
+                <div className="d-flex justify-content-between fw-bold">
+                  <span>Total Amount</span>
+                  <span>₹{totalAmount}</span>
+                </div>
+
+                {discount > 0 && (
+                  <p className="text-success mt-3 mb-2 small text-center">
+                    You will save ₹{discount} on this order
+                  </p>
+                )}
+
+                <div className="text-center">
+                  <Link className="btn btn-success mt-2 px-4" to="/address" >
+                    Place Order
+                  </Link>
+                </div>
+              </div>
             </div>
           </>
         )}

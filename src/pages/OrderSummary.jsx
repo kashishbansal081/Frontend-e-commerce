@@ -15,31 +15,68 @@ export default function OrderSummary() {
     return (
       <>
         <Navbar />
-        <h1 className="my-5">No orders found!</h1>
+        <div className="container text-center my-5">
+          <h2 className="text-muted">No orders found!</h2>
+        </div>
       </>
     );
   }
 
-  const totalOfProducts = lastOrder.items.reduce(
-    (acc, curr) => acc + curr.product.productPrice * curr.quantity,
-    0
-  );
+  const { items, price, discount, delivery, totalAmount } = lastOrder;
 
   return (
     <>
       <Navbar />
-      <h1 className="my-5">Order has been Placed Successfully!</h1>
 
-      <div className="container text-center text-md-start">
-        <h2 className="text-center text-md-start fs-2">Order Summary</h2>
-        <p>Items ({lastOrder.items.length}): Rs {totalOfProducts}</p>
-        <p>Total: Rs {totalOfProducts}</p>
-        <p>Post & Packaging: Rs 100</p>
-        <hr />
-        <h3 style={{ color: "Red" }}>
-          Order Total: Rs {totalOfProducts + 100} 
-        </h3>
-        <hr />
+      <div className="container my-5">
+        <div className="text-center mb-5">
+          <h2 className="fw-bold text-success">
+            Order Placed Successfully!
+          </h2>
+          <p className="text-muted mt-2">
+            Thank you for shopping with us. Your order details are below.
+          </p>
+        </div>
+
+        <div className="card shadow-sm p-4 mx-auto" style={{ maxWidth: "700px" }}>
+          <h4 className="fw-bold mb-3 text-center">🧾 Order Summary</h4>
+          <hr />
+
+          <div className="d-flex justify-content-between mb-2">
+            <span>Items ({items.length})</span>
+            <span>₹{price}</span>
+          </div>
+
+          {discount > 0 && (
+            <div className="d-flex justify-content-between mb-2 text-success">
+              <span>Discount (10%)</span>
+              <span>- ₹{discount}</span>
+            </div>
+          )}
+
+          <div className="d-flex justify-content-between mb-2">
+            <span>Delivery Charges</span>
+            <span>{delivery === 0 ? "Free" : `₹${delivery}`}</span>
+          </div>
+
+          <hr />
+          <div className="d-flex justify-content-between fw-bold fs-5">
+            <span>Total Amount</span>
+            <span>₹{totalAmount}</span>
+          </div>
+
+          {discount > 0 && (
+            <p className="text-success text-center mt-3 small">
+              You saved ₹{discount} on this order 🎉
+            </p>
+          )}
+        </div>
+
+        <div className="text-center mt-5">
+          <a href="/" className="btn btn-outline-success px-4 py-2">
+            Continue Shopping
+          </a>
+        </div>
       </div>
     </>
   );

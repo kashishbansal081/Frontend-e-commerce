@@ -30,7 +30,7 @@ export default function Navbar({ setSearchItem }) {
         <div className="container">
           <div className="d-flex align-items-center">
             <NavLink className="navbar-brand fw-bold text-light me-4" to="/">
-              MyShoppingSite
+              DesiKart
             </NavLink>
           </div>
 

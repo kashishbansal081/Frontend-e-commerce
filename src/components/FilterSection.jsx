@@ -134,7 +134,7 @@ export default function FitlerSection({
               index ===
               self.findIndex(
                 (p) => p.productBrandName === product.productBrandName
-              )
+              )  && product.category === categoryId
           )
           .map((product) => {
             return (

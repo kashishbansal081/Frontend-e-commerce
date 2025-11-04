@@ -32,10 +32,10 @@ export default function ProductCardForCart({ prod }) {
         </div>
       )}
       <div className="col-md-12">
-        <div className="card pt-3 px-3">
+        <div className="card pt-3 px-3 py-2">
           <div className="d-flex flex-column flex-md-row text-start">
             {/* Product Image */}
-            <div className="product-thumbnail">
+            <div className="product-thumbnail" style={{minWidth : '120px'}}>
               <img
                 src={prod.product.productImage}
                 alt={prod.product.productName}
@@ -46,9 +46,9 @@ export default function ProductCardForCart({ prod }) {
 
             {/* Product Info */}
             <div className="product-info ms-md-5 mt-4 mt-md-0">
-              <h2 className="text-center text-md-start">
+              <h3 className="text-center text-md-start">
                 {prod.product.productName}
-              </h2>
+              </h3>
 
               {/* Quantity Controls */}
               <div className="quantity d-flex flex-column flex-md-row align-items-center mt-4">
