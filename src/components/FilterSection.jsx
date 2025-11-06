@@ -93,10 +93,10 @@ export default function FitlerSection({
   return (
     <form>
       <div className="clear-filter d-flex align-items-center justify-content-between">
-        <h3>Filters</h3>
+        <h4 className="mb-0">Filters</h4>
         <button
           type="reset"
-          className="fw-bold fs-5 mt-2 rounded"
+          className="fw-bold fs-5 rounded btn btn-light btn-sm"
           value="Clear form"
           onClick={resetFormHandler}
         >
@@ -104,9 +104,9 @@ export default function FitlerSection({
         </button>
       </div>
       <div className="price mt-3">
-        <h3 className="text-start">Price</h3>
+        <h4 className="text-start">Price</h4>
         <div className=" mt-4">
-          <div className="d-flex justify-content-between px-2">
+          <div className="d-flex justify-content-between px-2 text-muted">
             <span>10000</span>
             <span>50000</span>
             <span>100000</span>
@@ -127,7 +127,7 @@ export default function FitlerSection({
       </div>
 
       <div className="category text-start mt-4">
-        <h3>Brand</h3>
+        <h4>Brand</h4>
         {data?.data
           ?.filter(
             (product, index, self) =>
@@ -156,7 +156,7 @@ export default function FitlerSection({
       </div>
 
       <div className="rating text-start mt-4">
-        <h3>Rating</h3>
+        <h4>Rating</h4>
         <input
           type="radio"
           name="rating"
@@ -200,7 +200,7 @@ export default function FitlerSection({
       </div>
 
       <div className="sort-by mt-4 text-start">
-        <h3>Sort By</h3>
+        <h4>Sort By</h4>
         <input
           type="radio"
           name="sorting"

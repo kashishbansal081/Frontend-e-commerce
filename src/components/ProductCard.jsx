@@ -6,7 +6,7 @@ import { CartContext } from "../useContext/CartContext";
 
 export default function ProductCard({ product }) {
   const { wishListItems, setWishList } = useContext(WishListContext);
-  const { addToCartPostHandler } = useContext(CartContext);
+  const { addToCartPostHandler} = useContext(CartContext);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
@@ -20,6 +20,17 @@ export default function ProductCard({ product }) {
     (item) => item._id === product._id
   );
 
+  function addToCartFromProductsPageHandler(){
+     if (product.sizes && product.sizes.length > 0) {
+      const defaultSize = product.sizes[0];
+
+      addToCartPostHandler(product._id, 1, defaultSize);
+      triggerAlert(`Added to cart (Size: ${defaultSize})`);
+    } else {
+      addToCartPostHandler(product._id, 1);
+      triggerAlert("Added to cart!");
+    }
+  }
   return (
     <>
       {showAlert && (
@@ -66,14 +77,14 @@ export default function ProductCard({ product }) {
               to={`/product/${product._id}`}
               className="text-decoration-none text-dark"
             >
-              <h5 className="card-title fs-4  text-center">
+              <h5 className="card-title fs-5  text-center">
                 {product.productName}
               </h5>
             </Link>
 
             {/* DESCRIPTION WITH TRUNCATION */}
             <p
-              className="card-text text-muted text-center"
+              className="card-text text-muted text-center small"
               style={{
                 display: "-webkit-box",
                 WebkitLineClamp: 2, 
@@ -89,16 +100,13 @@ export default function ProductCard({ product }) {
 
           {/* PRICE + BUTTONS */}
           <div className="mt-auto">
-            <h3 className="fw-semibold mb-3 text-center">
+            <h4 className="fw-semibold mb-3 text-center">
               Rs {product.productPrice}
-            </h3>
+            </h4>
 
             <button
               className="btn btn-warning w-100 mb-2"
-              onClick={() => {
-                addToCartPostHandler(product._id);
-                triggerAlert("Product added to cart!");
-              }}
+              onClick={addToCartFromProductsPageHandler}
             >
               Add To Cart
             </button>

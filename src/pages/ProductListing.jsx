@@ -38,7 +38,7 @@ export default function ProductListing({ searchItem, setSearchItem }) {
           </div>
 
           <section
-            className="col-12 col-md-3 col-lg-3 bg-dark text-light p-3 collapse d-md-block "
+            className="col-12 col-md-3 col-lg-3 text-dark p-3 collapse d-md-block  "
             id="filterCollapse"
           >
             <FilterSection

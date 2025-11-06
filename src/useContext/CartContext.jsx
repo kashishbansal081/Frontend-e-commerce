@@ -6,19 +6,24 @@ export const CartContext = createContext();
 export default function CartProvider({ children }) {
   const [cartData, setCartData] = useState([]);
   const [addToCart, setAddToCart] = useState({ productId: "", quantity: 1 });
-   const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [selectedSize, sizeHandler] = useState("");
 
-  const { data: cartDat } = useFetch(`https://backend-e-commerce-ashen.vercel.app/v1/api/cart`);
+  const { data: cartDat, loading } = useFetch(`https://backend-e-commerce-ashen.vercel.app/v1/api/cart`);
 
-  async function addToCartPostHandler(productId, quantity = 1) {
-     if (!productId) {
+  async function addToCartPostHandler(productId, quantity = 1, size = "") {
+    if (!productId) {
       console.log("No productId provided");
       return;
     }
 
     try {
       console.log("I am adding / updating the values");
+      const bodyData = { productId, quantity };
+      if (size) {
+        bodyData.size = size;
+      }
       const result = await fetch(
         "https://backend-e-commerce-ashen.vercel.app/v1/api/cart/updateItem",
         {
@@ -26,7 +31,7 @@ export default function CartProvider({ children }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ productId, quantity }),
+          body: JSON.stringify(bodyData),
         }
       );
 
@@ -38,18 +43,25 @@ export default function CartProvider({ children }) {
     }
   }
 
-  async function deleteCartItemHandler(id) {
+  async function deleteCartItemHandler(productId, size) {
     try {
-      const response = await fetch(`https://backend-e-commerce-ashen.vercel.app/v1/api/cart/${id}`, {
+      const response = await fetch(`https://backend-e-commerce-ashen.vercel.app/v1/api/cart/items`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({productId, size})
       });
 
       if (!response.ok) {
         throw new Error("Failed to delete item");
       }
 
-      // Update UI instantly
-      setCartData((prev) => prev.filter((p) => p.product._id !== id));
+      setCartData((prev) =>
+        prev.filter(
+          (item) => !(item.product._id === productId && item.size === size)
+        )
+      );
       console.log("Item deleted successfully");
     } catch (error) {
       console.log(error);
@@ -57,23 +69,23 @@ export default function CartProvider({ children }) {
   }
 
   async function clearCartHandler() {
-  try {
-    const response = await fetch("https://backend-e-commerce-ashen.vercel.app/v1/api/cart", {
-      method: "DELETE",
-    });
+    try {
+      const response = await fetch("https://backend-e-commerce-ashen.vercel.app/v1/api/cart", {
+        method: "DELETE",
+      });
 
-    if (!response.ok) {
-      throw new Error("Failed to clear cart");
+      if (!response.ok) {
+        throw new Error("Failed to clear cart");
+      }
+
+      setCartData([]);
+      console.log("Cart cleared successfully");
+    } catch (error) {
+      console.error("Error clearing cart:", error);
     }
-
-    setCartData([]);
-    console.log("Cart cleared successfully");
-  } catch (error) {
-    console.error("Error clearing cart:", error);
   }
-}
 
- const triggerAlert = (message, type = "success") => {
+  const triggerAlert = (message, type = "success") => {
     setAlertMessage({ message, type });
     setShowAlert(true);
     setTimeout(() => {
@@ -91,6 +103,7 @@ export default function CartProvider({ children }) {
     <CartContext.Provider
       value={{
         cartData,
+        loading,
         setCartData,
         addToCart,
         setAddToCart,
@@ -99,7 +112,9 @@ export default function CartProvider({ children }) {
         clearCartHandler,
         triggerAlert,
         showAlert,
-        alertMessage
+        alertMessage,
+        selectedSize,
+        sizeHandler,
       }}
     >
       {children}

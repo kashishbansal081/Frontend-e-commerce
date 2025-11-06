@@ -11,11 +11,9 @@ export default function userProfile() {
           <strong>Full Name:</strong>{" "}
         </label>
         <br />
-        <input type="text" value="Kashish" className="p-2" disabled />
-        <input type="text" value="Bansal" className="ms-0 ms-md-3 mt-2 mt-md-0 p-2" disabled />
-        <br />
+       <p>Kashish Bansal</p>
 
-        <label htmlFor="yourGender" className="mt-4 mb-3">
+        <label htmlFor="yourGender" className="mb-2">
           <strong>Your Gender:</strong>{" "}
         </label>
         <br />
@@ -34,18 +32,15 @@ export default function userProfile() {
         </label>
         <br />
 
-        <label htmlFor="email" className="mt-4 mb-3 ">
+        <label htmlFor="email" className="mt-3 mb-3 ">
           <strong>Email Address:</strong>{" "}
         </label>
-        <br />
-        <input type="email" value="sample@gmail.com" disabled className="p-2" />
-        <br />
-
-        <label htmlFor="phoneNumber" className="mt-4 mb-3">
+        <p>sample@gmail.com</p>
+        <label htmlFor="phoneNumber" className="mt-2 mb-3">
           <strong>Phone Number:</strong>{" "}
         </label>
         <br />
-        <input type="text" value="123456789" disabled className="p-2" />
+        <p>9123456789</p>
       </div>
     </>
   );

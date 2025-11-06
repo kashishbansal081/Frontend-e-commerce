@@ -10,6 +10,20 @@ export default function ProductWishList({}) {
   const { addToCartPostHandler, cartData } = useContext(CartContext);
 
   const handleMoveToCart = async (product) => {
+    if (product.sizes && product.sizes.length > 0) {
+    const defaultSize = product.sizes[0];
+
+    const cartItem = cartData.find(
+      (item) => item.product._id === product._id && item.size === defaultSize
+    );
+
+    if (cartItem) {
+      await addToCartPostHandler(product._id, cartItem.quantity + 1, defaultSize);
+    } else {
+      await addToCartPostHandler(product._id, 1, defaultSize);
+    }
+  } else {
+
     const cartItem = cartData.find((item) => item.product._id === product._id);
 
     if (cartItem) {
@@ -17,6 +31,7 @@ export default function ProductWishList({}) {
     } else {
       await addToCartPostHandler(product._id, 1);
     }
+  }
   };
   return (
     <>
