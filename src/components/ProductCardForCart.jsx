@@ -11,12 +11,13 @@ export default function ProductCardForCart({ prod }) {
     triggerAlert,
     showAlert,
     alertMessage,
+    selectedSize,
   } = useContext(CartContext);
 
   const handleQuantityChange = async (newCount) => {
-    if (newCount < 1) return; // prevent negative quantity
+    if (newCount < 1) return; 
     setCount(newCount);
-    await addToCartPostHandler(prod.product._id, newCount);
+    await addToCartPostHandler(prod.product._id, newCount, prod.size);
   };
 
   return (
@@ -35,7 +36,7 @@ export default function ProductCardForCart({ prod }) {
         <div className="card pt-3 px-3 py-2">
           <div className="d-flex flex-column flex-md-row text-start">
             {/* Product Image */}
-            <div className="product-thumbnail" style={{minWidth : '120px'}}>
+            <div className="product-thumbnail" style={{ minWidth: "120px" }}>
               <img
                 src={prod.product.productImage}
                 alt={prod.product.productName}
@@ -46,13 +47,17 @@ export default function ProductCardForCart({ prod }) {
 
             {/* Product Info */}
             <div className="product-info ms-md-5 mt-4 mt-md-0">
-              <h3 className="text-center text-md-start">
+              <h3 className="text-center text-md-start fs-5">
                 {prod.product.productName}
               </h3>
 
+              {/* Selected Size */}
+
+              {prod.size && <p className="m-0 mt-3 p-0 text-center text-md-start">Size: {prod.size}</p>}
+
               {/* Quantity Controls */}
-              <div className="quantity d-flex flex-column flex-md-row align-items-center mt-4">
-                <p className="fw-semibold me-3 text-center text-md-start mb-0">
+              <div className="quantity d-flex flex-column flex-md-row align-items-center mt-4 mt-md-0">
+                <p className="fw-semibold me-md-3 me-0 text-center text-md-start mb-0">
                   Quantity:
                 </p>
 
@@ -85,7 +90,7 @@ export default function ProductCardForCart({ prod }) {
                 <button
                   className="btn btn-danger btn-sm ms-0 ms-md-4 mt-3 mt-md-0 "
                   onClick={() => {
-                    deleteCartItemHandler(prod.product._id);
+                    deleteCartItemHandler(prod.product._id, prod.size);
                     triggerAlert("❌ Product Removed", "danger");
                   }}
                 >
@@ -118,7 +123,7 @@ export default function ProductCardForCart({ prod }) {
                 </button>
               </div>
 
-              <h4 className="my-3 text-center text-md-start">
+              <h4 className="my-3 mt-md-2 text-center text-md-start fs-5">
                 Rs {prod.product.productPrice}
               </h4>
             </div>

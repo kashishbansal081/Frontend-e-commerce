@@ -33,10 +33,17 @@ export default function ProductDetails() {
     `https://backend-e-commerce-ashen.vercel.app/v1/api/product/${productId}`
   );
   const { setWishList, wishListItems } = useContext(WishListContext);
-  const { addToCartPostHandler } = useContext(CartContext);
+  const { addToCartPostHandler, selectedSize, sizeHandler } =
+    useContext(CartContext);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [quantity, setQuantity] = useState(1);
+
+  const discountPercentage = 29;
+
+  const calculateOriginalPrice = (discountedPrice) => {
+    return discountedPrice / (1 - discountPercentage / 100);
+  };
 
   const triggerAlert = (message, type = "success") => {
     setAlertMessage({ message, type });
@@ -45,6 +52,21 @@ export default function ProductDetails() {
       setShowAlert(false);
     }, 2000);
   };
+
+  const cartPostHandler = () => {
+    if (data.data.sizes && data.data.sizes.length > 0) {
+      const defaultSize = data.data.sizes[0];
+      const finalSize = selectedSize || defaultSize;
+
+      addToCartPostHandler(productId, quantity, finalSize);
+      sizeHandler("");
+      triggerAlert(`Added to cart (Size: ${finalSize})`);
+    } else {
+      addToCartPostHandler(productId, quantity);
+      triggerAlert("Added to cart!");
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -75,19 +97,26 @@ export default function ProductDetails() {
                     src={data.data.productImage}
                     alt="Image"
                     className="p-4 px-5 img-fluid"
+                    style={{ width: "400px" }}
                   />
                   <Link>
                     <FaHeart
                       className="position-absolute top-0 end-0 mt-2 me-3"
                       size={25}
                       color={
-                        wishListItems.some((product) => product._id === productId)
+                        wishListItems.some(
+                          (product) => product._id === productId
+                        )
                           ? "#e3002a"
                           : "#999"
                       }
                       onClick={() => {
                         setWishList(productId);
-                        if (wishListItems.some((product) => product._id === productId)) {
+                        if (
+                          wishListItems.some(
+                            (product) => product._id === productId
+                          )
+                        ) {
                           triggerAlert("❌ Removed from wishlist!", "danger");
                         } else {
                           triggerAlert("💖 Added to wishlist!", "success");
@@ -100,10 +129,7 @@ export default function ProductDetails() {
                 <br />
                 <Link
                   className="btn btn-warning mt-2 w-100"
-                  onClick={() => {
-                    addToCartPostHandler(productId, quantity);
-                    triggerAlert("Product added to cart!");
-                  }}
+                  onClick={cartPostHandler}
                 >
                   Add To Cart
                 </Link>
@@ -111,15 +137,13 @@ export default function ProductDetails() {
                 <Link
                   className="btn btn-primary mt-2 w-100"
                   to={"/cart"}
-                  onClick={() => {
-                    addToCartPostHandler(productId, quantity);
-                  }}
+                  onClick={cartPostHandler}
                 >
                   Buy Now
                 </Link>
               </div>
               <div className="productData w-75 mt-4 mt-md-0 text-start ps-5">
-                <h3 className="fs-4 fs-md-3">{data.data.productName}</h3>
+                <h4 className="fs-4">{data.data.productName}</h4>
 
                 {/* Rating stars + number */}
                 <div className="d-flex align-items-center mt-3">
@@ -127,17 +151,42 @@ export default function ProductDetails() {
                   <span className="ms-2 fs-6">{data.data.productRating}</span>
                 </div>
 
-                <div className="prices d-flex mt-2">
-                  <h4 className="mt-1 fw-medium me-3 fs-5 fs-md-4">
+                <div className="prices d-flex mt-2 align-items-center">
+                  <h5 className="mt-1 fw-medium me-3 fs-5">
                     Rs {data.data.productPrice}
-                  </h4>
+                  </h5>
                   <h4 className="mt-1 text-decoration-line-through text-body-secondary fs-6">
-                    Rs 80000
+                    Rs{" "}
+                    {Math.round(calculateOriginalPrice(data.data.productPrice))}
                   </h4>
                 </div>
-                <h4 className="mt-2 text-body-secondary fw-medium fs-6">29% off</h4>
+                <h4 className="mt-2 text-body-secondary fw-medium fs-6">
+                  {discountPercentage}% off
+                </h4>
+
+                {data.data.sizes && data.data.sizes.length > 0 && (
+                  <div className="sizes mt-3">
+                    <p className="fw-semibold me-3 fs-6">Size:</p>
+
+                    {data.data.sizes?.map((size) => (
+                      <button
+                        className={`btn btn-sm me-3 btn-clothing-size ${
+                          selectedSize === size
+                            ? "btn-dark text-white"
+                            : "btn-light"
+                        }`}
+                        value={size}
+                        onClick={(e) => {
+                          sizeHandler(e.target.value);
+                        }}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                )}
                 <div className="quantity d-flex align-items-center">
-                  <p className="mt-4 fw-semibold me-3 fs-6">Quantity:</p>
+                  <p className="mt-3 fw-semibold me-3 fs-6">Quantity:</p>
 
                   <button
                     className="btn btn-sm btn-outline-secondary"
@@ -147,7 +196,9 @@ export default function ProductDetails() {
                     -
                   </button>
 
-                  <p className="mt-3 mx-3 border rounded py-1 px-3">{quantity}</p>
+                  <p className="mt-3 mx-3 border rounded py-1 px-3">
+                    {quantity}
+                  </p>
 
                   <button
                     className="btn btn-sm btn-outline-secondary"
@@ -160,27 +211,49 @@ export default function ProductDetails() {
                 <div className="highlights">
                   <p className="mt-2 fw-semibold me-3 fs-6">Highlights: </p>
                   <ul>
-                    {data.data.productDescription.highlights.map((feature, index) => {
-                      return <li key={index} className="fs-6">{feature}</li>;
-                    })}
+                    {data.data.productDescription.highlights.map(
+                      (feature, index) => {
+                        return (
+                          <li key={index} className="fs-6">
+                            {feature}
+                          </li>
+                        );
+                      }
+                    )}
                   </ul>
                 </div>
                 <hr />
                 <div className="delivery-Detail row text-center mt-3">
                   <div className="col-6 col-md-3 mb-3">
-                    <FontAwesomeIcon icon={faArrowRotateLeft} className="fa-2x mb-2" />
+                    <FontAwesomeIcon
+                      icon={faArrowRotateLeft}
+                      className="fa-2x mb-2"
+                      style={{ height: "26px" }}
+                    />
                     <p className="mb-0 small fs-6">10 days Returnable</p>
                   </div>
                   <div className="col-6 col-md-3 mb-3">
-                    <FontAwesomeIcon icon={faMoneyBillWave} className="fa-2x mb-2" />
+                    <FontAwesomeIcon
+                      icon={faMoneyBillWave}
+                      className="fa-2x mb-2"
+                      style={{ height: "26px" }}
+                    />
                     <p className="mb-0 small fs-6">Pay Cash On Delivery</p>
                   </div>
                   <div className="col-6 col-md-3 mb-3">
-                    <FontAwesomeIcon icon={faTruck} className="fa-2x mb-2" />
+                    <FontAwesomeIcon
+                      icon={faTruck}
+                      className="fa-2x mb-2"
+                      style={{ height: "26px" }}
+                    />
                     <p className="mb-0 small fs-6">Free Delivery</p>
                   </div>
                   <div className="col-6 col-md-3 mb-3">
-                    <FontAwesomeIcon icon={faLock} className="fa-2x mb-2" />
+                    <FontAwesomeIcon
+                      icon={faLock}
+                      className="fa-2x mb-2"
+                      style={{ height: "26px" }}
+                    />
                     <p className="mb-0 small fs-6">Secure Payment</p>
                   </div>
                 </div>
@@ -188,7 +261,9 @@ export default function ProductDetails() {
                 <hr />
                 <div className="description">
                   <p className="mt-4 fw-semibold me-3 fs-6">Description: </p>
-                  <p className="fs-6">{data.data.productDescription.basic}</p>
+                  <p className="fs-6 text-muted ">
+                    {data.data.productDescription.basic}
+                  </p>
                 </div>
                 <hr />
               </div>

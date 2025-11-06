@@ -1,0 +1,25 @@
+@media only screen and (max-width: 767px) {
+    .nav-icon-container{
+        width: 100%;
+        margin-top: 6px;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .nav-icon-container{
+        margin-left: 1.2rem;
+    }
+}
+
+@media only screen and (max-width: 501px) {
+    .btn-clothing-size{
+        font-size: 15px;
+    }
+    .productData{
+        padding: 0 !important;
+        width: 100% !important;
+    }
+}
+

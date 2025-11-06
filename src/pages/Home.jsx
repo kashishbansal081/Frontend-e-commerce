@@ -20,10 +20,10 @@ export default function Home() {
               data.data.map((category) => {
                 return (
                   <div
-                    className="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-between"
+                    className="col-sm-12 col-md-6 col-lg-4"
                     key={category._id}
                   >
-                    <div className="card shadow-sm border-0 rounded-3 text-center mx-auto">
+                    <div className="card shadow-sm border-0 rounded-3 text-center mx-auto" style={{width : '100%', maxWidth: '400px'}}>
                       <Link
                         to={`/productListing/${category._id}`}
                         className="text-decoration-none text-dark"
@@ -32,7 +32,7 @@ export default function Home() {
                           src={category.image}
                           alt={category.name}
                           className="card-img-top rounded-top"
-                          style={{ height: "260px" }}
+                          style={{ height: "260px", objectFit : 'cover'}}
                         />
                         <div className="card-body">
                           <h5 className="fw-semibold">{category.name}</h5>

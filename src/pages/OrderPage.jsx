@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 export default function OrderPage() {
   const [orders, setOrders] = useState([]);
 
+  console.log(orders);
   useEffect(() => {
     const storedOrders = window.localStorage.getItem("orders");
     if (storedOrders) {
@@ -29,8 +30,10 @@ export default function OrderPage() {
         {orders.length > 0 ? (
           orders.map((order, index) => (
             <div key={index} className="card mb-4 p-3 shadow-sm">
-              <h5 className="text-start" style={{fontSize: '1rem'}}>Order Date: {new Date(order.orderDate).toLocaleString()}</h5>
- 
+              <h5 className="text-start" style={{ fontSize: "1rem" }}>
+                Order Date: {new Date(order.orderDate).toLocaleString()}
+              </h5>
+
               <div className="row">
                 {order.items.map((item, i) => (
                   <div key={i} className="col-md-12 mb-3">
@@ -42,7 +45,7 @@ export default function OrderPage() {
                         style={{
                           height: "150px",
                           width: "140px",
-              
+
                           marginRight: "20px",
                         }}
                       />
@@ -51,6 +54,7 @@ export default function OrderPage() {
                         <p className="mb-1">
                           Brand: {item.product.productBrandName}
                         </p>
+                        {item.size && <p className="mb-1">Size: {item.size}</p>}
                         <p className="mb-1">
                           Price: ₹{item.product.productPrice}
                         </p>

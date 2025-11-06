@@ -27,8 +27,8 @@ export default function Navbar({ setSearchItem }) {
         className="navbar navbar-expand-lg bg-dark border-bottom border-body py-2"
         data-bs-theme="dark"
       >
-        <div className="container">
-          <div className="d-flex align-items-center">
+        <div className="container d-flex justify-content-between">
+          <div className="d-flex align-items-center justify-content-between">
             <NavLink className="navbar-brand fw-bold text-light me-4" to="/">
               DesiKart
             </NavLink>
@@ -45,8 +45,8 @@ export default function Navbar({ setSearchItem }) {
           </form>
 
           <div
-            className="d-flex align-items-center justify-content-between gap-3 position-relative mx-auto"
-            style={{ minWidth: "120px" }}
+            className="d-flex align-items-center justify-content-between gap-3 position-relative nav-icon-container"
+            style={{ minWidth: "220px" }}
           >
             {isLogin ? (
               <div className="dropdown">
