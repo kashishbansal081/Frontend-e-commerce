@@ -12,6 +12,7 @@ import { FaStar, FaStarHalfAlt, FaRegStar, FaHeart } from "react-icons/fa";
 import { useContext, useState } from "react";
 import { WishListContext } from "../useContext/WishListContext";
 import { CartContext } from "../useContext/CartContext";
+import Footer from "../components/Footer";
 
 function Rating({ value }) {
   const stars = [];
@@ -273,6 +274,7 @@ export default function ProductDetails() {
           <p>No Data found</p>
         )}
       </div>
+      {!loading && <Footer />}
     </>
   );
 }

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import FilterSection from "../components/FilterSection";
 import { useState, useEffect } from "react";
+import Footer from "../components/Footer";
 
 export default function ProductListing({ searchItem, setSearchItem }) {
   const { categoryId } = useParams();
@@ -71,10 +72,7 @@ export default function ProductListing({ searchItem, setSearchItem }) {
                     key={product._id}
                     className="col-12 col-sm-12 col-md-6 col-lg-4 mb-4"
                   >
-                    <ProductCard
-                      product={product}
-                      searchItem={searchItem}
-                    />
+                    <ProductCard product={product} searchItem={searchItem} />
                   </div>
                 ))
               ) : (
@@ -86,6 +84,7 @@ export default function ProductListing({ searchItem, setSearchItem }) {
           </section>
         </div>
       </div>
+      {!loading && <Footer />}
     </>
   );
 }

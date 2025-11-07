@@ -1,6 +1,7 @@
 import { useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import { AddressContext } from "../useContext/AddressContext";
+import Footer from "../components/Footer";
 
 export default function UserAddresses() {
   const {
@@ -24,7 +25,8 @@ export default function UserAddresses() {
   }, [addresses]);
 
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
+      <main className="flex-grow-1">
       <Navbar />
       <div className="container">
         <h2 className="my-4">Add / Update a Delivery Address</h2>
@@ -171,6 +173,8 @@ export default function UserAddresses() {
           </form>
         )}
       </div>
-    </>
+      </main>
+      <Footer/>
+    </div>
   );
 }

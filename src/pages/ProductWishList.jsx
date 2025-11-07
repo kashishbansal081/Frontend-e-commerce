@@ -3,11 +3,12 @@ import { WishListContext } from "../useContext/WishListContext";
 import Navbar from "../components/Navbar";
 import { FaHeart } from "react-icons/fa";
 import { CartContext } from "../useContext/CartContext";
+import Footer from "../components/Footer";
 
-export default function ProductWishList({}) {
+export default function ProductWishList() {
   const { setWishList, wishListItems, triggerAlert, showAlert, alertMessage } =
     useContext(WishListContext);
-  const { addToCartPostHandler, cartData } = useContext(CartContext);
+  const { addToCartPostHandler, cartData, loading } = useContext(CartContext);
 
   const handleMoveToCart = async (product) => {
     if (product.sizes && product.sizes.length > 0) {
@@ -34,7 +35,8 @@ export default function ProductWishList({}) {
   }
   };
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
+      <main className="flex-grow-1">
       <Navbar />
       {showAlert && (
         <div class="d-flex justify-content-center align-items-center">
@@ -48,7 +50,7 @@ export default function ProductWishList({}) {
       )}
 
       <h1 className="my-3">My WishList</h1>
-      <div className="container">
+      <div className="container pb-4">
         <div className="row g-4">
           {wishListItems?.length > 0 ? (
             wishListItems?.map((product) => (
@@ -116,6 +118,8 @@ export default function ProductWishList({}) {
           )}
         </div>
       </div>
-    </>
+      </main>
+      {!loading && <Footer />}
+    </div>
   );
 }
