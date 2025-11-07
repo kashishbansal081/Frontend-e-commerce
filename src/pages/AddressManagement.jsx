@@ -2,6 +2,7 @@ import { useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import { AddressContext } from "../useContext/AddressContext";
+import Footer from '../components/Footer'
 
 export default function AddressManagement() {
   const {
@@ -28,7 +29,8 @@ export default function AddressManagement() {
   }, [addresses]);
 
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
+      <main className="flex-grow-1">
       <Navbar />
       <div className="container">
         <h2 className="my-4">Select a Delivery Address</h2>
@@ -192,6 +194,8 @@ export default function AddressManagement() {
           </form>
         )}
       </div>
-    </>
+      </main>
+      <Footer/>
+    </div>
   );
 }

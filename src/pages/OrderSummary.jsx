@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import Footer from '../components/Footer'
 
 export default function OrderSummary() {
   const [lastOrder, setLastOrder] = useState(null);
@@ -25,10 +26,11 @@ export default function OrderSummary() {
   const { items, price, discount, delivery, totalAmount } = lastOrder;
 
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
+      <main className="flex-grow-1">
       <Navbar />
 
-      <div className="container my-5">
+      <div className="container mt-5">
         <div className="text-center mb-5">
           <h2 className="fw-bold text-success">
             Order Placed Successfully!
@@ -78,6 +80,8 @@ export default function OrderSummary() {
           </a>
         </div>
       </div>
-    </>
+      </main>
+      <Footer/>
+    </div>
   );
 }

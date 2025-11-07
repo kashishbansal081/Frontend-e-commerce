@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function OrderPage() {
   const [orders, setOrders] = useState([]);
@@ -73,6 +74,7 @@ export default function OrderPage() {
           <p className="text-center mt-5">No orders found.</p>
         )}
       </div>
+      <Footer/>
     </>
   );
 }

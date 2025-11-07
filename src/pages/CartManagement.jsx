@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../useContext/CartContext";
 import ProductCardForCart from "../components/ProductCardForCart";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function CartManagement() {
   const { cartData,loading } = useContext(CartContext);
@@ -28,8 +29,9 @@ export default function CartManagement() {
   }, [cartData]);
 
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Navbar />
+      <main className="flex-grow-1">
       {loading ? (
         <>
           <div className="spinner-border text-info mt-5" role="status">
@@ -107,6 +109,8 @@ export default function CartManagement() {
           )}
         </div>
       )}
-    </>
+      </main>
+      <Footer/>
+    </div>
   );
 }
