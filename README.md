@@ -35,7 +35,7 @@ npm run dev      # or `npm start`
 ## Demo Video
 
 Watch a walkthrough (5–7 minutes) of all major features of this app:  
-[Loom Video Link]()
+[Demo Video Link](https://drive.google.com/file/d/1vnlAMuKR0tK6dkgcff7DfE0VEU0FlSt3/view)
 
 ---
 
