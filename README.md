@@ -1,70 +1,216 @@
-# Getting Started with Create React App
+# DesiKart
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack e-commerce web application where users can browse different product categories, filter products, manage wishlist and cart, select delivery addresses, and place orders successfully.  
+Built with a React frontend, Express/Node backend, and MongoDB database.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Demo Link
 
-### `npm start`
+[Live Demo](https://frontend-e-commerce-iota-nine.vercel.app/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Quick Start
 
-### `npm test`
+```
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
+npm install
+npm run dev      # or `npm start`
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Technologies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- React JS
+- React Router
+- Node.js
+- Express
+- MongoDB
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Demo Video
 
-### `npm run eject`
+Watch a walkthrough (5–7 minutes) of all major features of this app:  
+[Loom Video Link]()
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Home
+- Displays a list of product categories
+- Navigate to sections like Mobiles, Clothing, and more
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Product Listing
+- Displays all products based on selected category
+- Advanced filtering options:
+  - Filter by rating
+  - Filter by price
+  - Filter by brand
+  - Sort by Low to High price
+  - Sort by High to Low price
 
-## Learn More
+### Product Details
+- View complete product information
+- Check available sizes
+- Select quantity
+- Add to Wishlist
+- Add to Cart
+- Delivery time estimation
+- Product highlights and specifications
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Wishlist
+- Add products to favourite section
+- Remove products from wishlist
+- Move products directly to cart
+- Wishlist data stored in MongoDB
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Cart Management
+- Add products to cart
+- Update product quantity
+- Remove individual items
+- Clear entire cart
+- Proceed to checkout
 
-### Code Splitting
+### Delivery Address
+- Select delivery address
+- Remove previously saved address
+- Address data stored per user
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Order Placement
+- Place order successfully
+- View order summary in profile section
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## API Reference
 
-### Making a Progressive Web App
+### **GET /v1/api/products**  
+Get all products  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Sample Response:
+```
+{
+  "data": [
+    {
+      "_id": "68de3178577cb2b833f2d8e3",
+      "productName": "Apple iPhone 16 (Black, 128 GB)",
+      "productPrice": 56999,
+      "productRating": 4.6,
+      "productBrandName": "iPhone"
+    }
+  ]
+}
+```
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### **GET /v1/api/product/:productId**  
+Get details of a particular product  
 
-### Deployment
+Sample Response:
+```
+{
+  "data": {
+    "_id": "6906039d014ad09cb05614b6",
+    "productName": "realme TechLife 7 kg Washing Machine",
+    "productPrice": 7790,
+    "productRating": 4.2,
+    "productBrandName": "Realme"
+  },
+  "msg": "Data has been read successfully."
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+### **GET /v1/api/category**  
+Get all product categories  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Sample Response:
+```
+{
+  "data": [
+    {
+      "_id": "68da528776a945642e4fa1cc",
+      "name": "Mobiles"
+    }
+  ]
+}
+```
+
+---
+
+### **POST /v1/api/wishlist**  
+Add product to wishlist  
+
+Sample Response:
+```
+{
+  "success": true,
+  "products": [...]
+}
+```
+
+---
+
+### **DELETE /v1/api/wishlist/:productId**  
+Remove product from wishlist  
+
+Sample Response:
+```
+{
+  "success": true,
+  "products": [...]
+}
+```
+
+---
+
+### **POST /v1/api/cart/updateItem**  
+Add or update cart item  
+
+Sample Response:
+```
+{
+  "success": true,
+  "msg": "Item added/updated successfully.",
+  "data": [...]
+}
+```
+
+---
+
+### **DELETE /v1/api/cart/items**  
+Remove specific item from cart  
+
+Sample Response:
+```
+{
+  "success": true,
+  "msg": "Item removed successfully from cart"
+}
+```
+
+---
+
+### **GET /v1/api/address/:userId**  
+Get user delivery addresses  
+
+Sample Response:
+```
+{
+  "address": [...]
+}
+```
+
+---
+
+## Contact
+
+For bugs or feature requests, please reach out to:  
+kashishbansal081@gmail.com
