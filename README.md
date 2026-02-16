@@ -1,7 +1,7 @@
 # DesiKart
 
-A full-stack e-commerce web application where users can browse different product categories, filter products, manage wishlist and cart, select delivery addresses, and place orders successfully.  
-Built with a React frontend, Express/Node backend, and MongoDB database.
+A full-stack e-commerce web application that allows users to browse product categories, filter products, manage wishlist and cart, select delivery addresses, and place orders successfully.  
+Built using a React frontend, Node.js/Express backend, and MongoDB database.
 
 ---
 
@@ -22,13 +22,32 @@ npm run dev      # or `npm start`
 
 ---
 
-## Technologies
+## Technologies Used
 
+### Frontend
 - React JS
 - React Router
+
+### Backend
 - Node.js
 - Express
+
+### Database
 - MongoDB
+
+---
+
+## Environment Setup
+
+Create a `.env` file in the root of your backend directory and add the following variables:
+
+```
+MONGODB=your_mongodb_connection_string
+```
+
+Replace the values with your own configuration details.
+
+Make sure MongoDB is running locally or provide a valid MongoDB Atlas connection string.
 
 ---
 
@@ -42,55 +61,54 @@ Watch a walkthrough (5–7 minutes) of all major features of this app:
 ## Features
 
 ### Home
-- Displays a list of product categories
-- Navigate to sections like Mobiles, Clothing, and more
+- Displays a list of product categories for easy navigation.
+- Allows users to navigate to sections such as Mobiles, Clothing, and other categories.
 
 ### Product Listing
-- Displays all products based on selected category
-- Advanced filtering options:
-  - Filter by rating
-  - Filter by price
-  - Filter by brand
-  - Sort by Low to High price
-  - Sort by High to Low price
+- Displays all products based on the selected category.
+- Provides advanced filtering options including:
+  - Filtering by rating.
+  - Filtering by price.
+  - Filtering by brand.
+  - Sorting products from low to high price.
+  - Sorting products from high to low price.
 
 ### Product Details
-- View complete product information
-- Check available sizes
-- Select quantity
-- Add to Wishlist
-- Add to Cart
-- Delivery time estimation
-- Product highlights and specifications
+- Displays complete product information including highlights and specifications.
+- Allows users to select available sizes.
+- Allows users to choose product quantity.
+- Enables users to add products to their wishlist.
+- Enables users to add products to their cart.
+- Shows estimated delivery time.
 
 ### Wishlist
-- Add products to favourite section
-- Remove products from wishlist
-- Move products directly to cart
-- Wishlist data stored in MongoDB
+- Allows users to add products to their favourite section.
+- Stores wishlist data in MongoDB.
+- Enables users to remove products from the wishlist.
+- Allows users to move wishlist items directly to the cart.
 
 ### Cart Management
-- Add products to cart
-- Update product quantity
-- Remove individual items
-- Clear entire cart
-- Proceed to checkout
+- Allows users to add products to the cart.
+- Enables users to update product quantity.
+- Allows users to remove individual cart items.
+- Enables users to clear the entire cart.
+- Allows users to proceed to checkout.
 
 ### Delivery Address
-- Select delivery address
-- Remove previously saved address
-- Address data stored per user
+- Allows users to select a delivery address.
+- Enables users to remove previously saved addresses.
+- Stores address information per user.
 
 ### Order Placement
-- Place order successfully
-- View order summary in profile section
+- Allows users to place orders successfully.
+- Displays order summary in the profile section after successful order placement.
 
 ---
 
 ## API Reference
 
 ### **GET /v1/api/products**  
-Get all products  
+Retrieves all products.
 
 Sample Response:
 ```
@@ -110,7 +128,7 @@ Sample Response:
 ---
 
 ### **GET /v1/api/product/:productId**  
-Get details of a particular product  
+Retrieves details of a specific product.
 
 Sample Response:
 ```
@@ -129,7 +147,7 @@ Sample Response:
 ---
 
 ### **GET /v1/api/category**  
-Get all product categories  
+Retrieves all product categories.
 
 Sample Response:
 ```
@@ -146,7 +164,7 @@ Sample Response:
 ---
 
 ### **POST /v1/api/wishlist**  
-Add product to wishlist  
+Adds a product to the wishlist.
 
 Sample Response:
 ```
@@ -159,7 +177,7 @@ Sample Response:
 ---
 
 ### **DELETE /v1/api/wishlist/:productId**  
-Remove product from wishlist  
+Removes a product from the wishlist.
 
 Sample Response:
 ```
@@ -172,7 +190,7 @@ Sample Response:
 ---
 
 ### **POST /v1/api/cart/updateItem**  
-Add or update cart item  
+Adds or updates a cart item.
 
 Sample Response:
 ```
@@ -186,7 +204,7 @@ Sample Response:
 ---
 
 ### **DELETE /v1/api/cart/items**  
-Remove specific item from cart  
+Removes a specific item from the cart.
 
 Sample Response:
 ```
@@ -199,7 +217,7 @@ Sample Response:
 ---
 
 ### **GET /v1/api/address/:userId**  
-Get user delivery addresses  
+Retrieves user delivery addresses.
 
 Sample Response:
 ```
